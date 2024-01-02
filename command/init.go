@@ -36,6 +36,13 @@ var Init = &cobra.Command{
 
 			defer file.Close()
 
+			head, err := os.OpenFile(filepath.Join(".", ".fit", "HEAD"), os.O_CREATE, 0644)
+			if err != nil {
+				return err
+			}
+
+			defer head.Close()
+
 			var idx index.Index
 			idx.Objects = make(map[string]index.Entry)
 			content, err := json.Marshal(idx)
